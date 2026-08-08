@@ -1,0 +1,328 @@
+/* Shaila CMS project pages + admin wizard */
+:root {
+  --srp-ink: #14110f;
+  --srp-paper: #f6f1ea;
+  --srp-rose: #b83266;
+  --srp-muted: rgba(20, 17, 15, 0.62);
+  --srp-line: rgba(20, 17, 15, 0.12);
+  --srp-serif: 'Cormorant Garamond', Georgia, serif;
+  --srp-sans: 'Manrope', system-ui, sans-serif;
+}
+
+.srp-body {
+  margin: 0;
+  background: var(--srp-paper);
+  color: var(--srp-ink);
+  font-family: var(--srp-sans);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.srp-header,
+.srp-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--srp-line);
+}
+
+.srp-footer {
+  border-bottom: 0;
+  border-top: 1px solid var(--srp-line);
+  margin-top: 4rem;
+}
+
+.srp-brand,
+.srp-nav a,
+.srp-footer a {
+  color: inherit;
+  text-decoration: none;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.srp-nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.srp-hero,
+.srp-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 1rem;
+}
+
+.srp-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--srp-rose);
+  margin: 0 0 1rem;
+}
+
+.srp-hero h1 {
+  font-family: var(--srp-serif);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  line-height: 0.95;
+  margin: 0 0 1.5rem;
+}
+
+.srp-lead {
+  max-width: 40rem;
+  font-size: 1.05rem;
+  color: var(--srp-muted);
+}
+
+.srp-section h2 {
+  font-family: var(--srp-serif);
+  font-weight: 400;
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+}
+
+.srp-gallery {
+  display: grid;
+  gap: 1rem;
+}
+
+.srp-figure {
+  margin: 0;
+  overflow: hidden;
+}
+
+.srp-figure img,
+.srp-journal-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.srp-journal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.srp-journal-caption {
+  margin: 0.75rem 0 0;
+  font-size: 0.92rem;
+  color: var(--srp-muted);
+}
+
+/* Admin chrome */
+.sr-admin-fab {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 10050;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(20, 17, 15, 0.88);
+  color: #f6f1ea;
+  font-family: var(--srp-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.1rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.sr-admin-fab:hover {
+  transform: translateY(-2px);
+  background: var(--srp-rose);
+}
+
+.sr-admin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10060;
+  background: rgba(10, 8, 7, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sr-admin-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sr-admin-panel {
+  width: min(640px, 100%);
+  max-height: min(88vh, 900px);
+  overflow: auto;
+  background: var(--srp-paper);
+  color: var(--srp-ink);
+  border: 1px solid var(--srp-line);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+  padding: 1.5rem 1.4rem 1.6rem;
+}
+
+.sr-admin-panel h2 {
+  font-family: var(--srp-serif);
+  font-weight: 400;
+  font-size: 2rem;
+  margin: 0 0 0.35rem;
+}
+
+.sr-admin-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.sr-admin-step-pill {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid var(--srp-line);
+  padding: 0.35rem 0.55rem;
+  color: var(--srp-muted);
+}
+
+.sr-admin-step-pill.is-active {
+  border-color: var(--srp-ink);
+  color: var(--srp-ink);
+}
+
+.sr-admin-step-pill.is-done {
+  border-color: var(--srp-rose);
+  color: var(--srp-rose);
+}
+
+.sr-admin-field {
+  margin-bottom: 1rem;
+}
+
+.sr-admin-field label {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+
+.sr-admin-field input[type='text'],
+.sr-admin-field input[type='password'],
+.sr-admin-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid rgba(20, 17, 15, 0.25);
+  background: transparent;
+  padding: 0.7rem 0;
+  font: inherit;
+  color: inherit;
+}
+
+.sr-admin-field textarea {
+  min-height: 120px;
+  resize: vertical;
+  border: 1px solid var(--srp-line);
+  padding: 0.75rem;
+}
+
+.sr-admin-field input:focus,
+.sr-admin-field textarea:focus {
+  outline: none;
+  border-color: var(--srp-ink);
+}
+
+.sr-admin-help {
+  font-size: 0.85rem;
+  color: var(--srp-muted);
+  margin: 0 0 1rem;
+}
+
+.sr-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.sr-admin-btn {
+  border: 1px solid var(--srp-ink);
+  background: transparent;
+  color: var(--srp-ink);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sr-admin-btn.primary {
+  background: var(--srp-ink);
+  color: var(--srp-paper);
+}
+
+.sr-admin-btn:hover {
+  opacity: 0.85;
+}
+
+.sr-admin-error {
+  color: #9b1c1c;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
+}
+
+.sr-admin-success {
+  color: #1f6b3a;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
+}
+
+.sr-admin-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.sr-admin-preview img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.sr-journal-row {
+  border: 1px solid var(--srp-line);
+  padding: 0.8rem;
+  margin-bottom: 0.7rem;
+}
+
+.sr-journal-row + .sr-journal-row {
+  margin-top: 0.2rem;
+}
+
+/* Injected CMS cards on home */
+.sr-cms-case {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.sr-cms-case.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.sr-cms-case .showcase-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}

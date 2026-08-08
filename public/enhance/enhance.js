@@ -1,4 +1,4 @@
-/* Shaila Rizvi — enhancement interactions */
+/* Shaila Rizvi enhancement interactions */
 (function () {
   'use strict'
 
@@ -123,7 +123,7 @@
     if (!heading) return
 
     // Soft parallax only while the hero is still mostly on screen.
-    // Avoid opacity fades — Webflow scroll/IX can report odd scrollY values.
+    // Avoid opacity fades: Webflow scroll/IX can report odd scrollY values.
     let ticking = false
     const update = () => {
       ticking = false

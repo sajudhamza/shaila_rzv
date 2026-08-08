@@ -1,0 +1,68 @@
+[
+  {
+    "id": "bungalow",
+    "slug": "bungalow",
+    "name": "Bungalow",
+    "description": "Bungalow in NYC's East Village: A luxe retreat inspired by vintage Indian living, meticulously crafted.",
+    "legacyHref": "/desing-cms/bungalow/",
+    "images": [],
+    "journal": [],
+    "createdAt": "2026-08-08T23:46:56.936Z",
+    "href": "/cms-projects/bungalow/"
+  },
+  {
+    "id": "chote-miya",
+    "slug": "chote-miya",
+    "name": "Chote Miya",
+    "description": "Chote Miya: A vibrant tribute to 90's India, blending street flavors with nostalgic ambiance in NYC.",
+    "legacyHref": "/desing-cms/chote-miya/",
+    "images": [],
+    "journal": [],
+    "createdAt": "2026-08-08T23:46:56.936Z",
+    "href": "/cms-projects/chote-miya/"
+  },
+  {
+    "id": "gupshup",
+    "slug": "gupshup",
+    "name": "GupShup",
+    "description": "GupShup (Bombay House) in NYC: 1970s Bombay nostalgia meets vibrant ambiance, blending Indian culture with creativity.",
+    "legacyHref": "/desing-cms/gupshup/",
+    "images": [],
+    "journal": [],
+    "createdAt": "2026-08-08T23:46:56.936Z",
+    "href": "/cms-projects/gupshup/"
+  },
+  {
+    "id": "ammi",
+    "slug": "ammi",
+    "name": "Ammi",
+    "description": "Ammi at Pier 57, NYC: Homestyle Indian cuisine, vibrant design, and open kitchen for immersive dining.",
+    "legacyHref": "/desing-cms/ammi/",
+    "images": [],
+    "journal": [],
+    "createdAt": "2026-08-08T23:46:56.936Z",
+    "href": "/cms-projects/ammi/"
+  },
+  {
+    "id": "movie",
+    "slug": "movie",
+    "name": "Zindagi Kashmakash",
+    "description": "Zindagi Kashmakash set design crafted to match the film's narrative, era and style with visually compelling interiors.",
+    "legacyHref": "/desing-cms/movie/",
+    "images": [],
+    "journal": [],
+    "createdAt": "2026-08-08T23:46:56.936Z",
+    "href": "/cms-projects/movie/"
+  },
+  {
+    "id": "punjab-meet-house",
+    "slug": "punjab-meet-house",
+    "name": "Punjab Meet House",
+    "description": "Punjab Meet House in Jersey City: an upscale casual dining room shaped around the warmth of a Punjabi home. Designed by Shaila Rizvi Studio with Phulkari-inspired color, handcrafted furnishings, Indian imports, layered textures, and soft lighting across about 2,245 sq ft at Haus25, Exchange Place.",
+    "legacyHref": null,
+    "images": [],
+    "journal": [],
+    "createdAt": "2026-08-08T23:46:56.936Z",
+    "href": "/cms-projects/punjab-meet-house/"
+  }
+]

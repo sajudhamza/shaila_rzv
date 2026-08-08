@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
+import { shailaAdminPlugin } from './server/adminPlugin.js'
 
 export default defineConfig({
   appType: 'mpa',
+  plugins: [shailaAdminPlugin()],
   build: {
     rollupOptions: {
       input: {

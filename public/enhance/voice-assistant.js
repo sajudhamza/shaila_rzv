@@ -1,4 +1,4 @@
-/* Shaila Rizvi — Design Guide voice assistant */
+/* Shaila Rizvi Design Guide voice assistant */
 (function () {
   'use strict'
 
@@ -8,12 +8,12 @@
     subtitle: 'Interiors · case studies · contact',
     launcher: 'Ask Shaila',
     welcome:
-      "Hello — I'm your design guide for Shaila Rizvi's studio. Ask about her work, case studies like Bungalow or GupShup, or how to get in touch.",
+      "Hello. I'm your design guide for Shaila Rizvi's studio. Ask about her work, case studies like Bungalow or GupShup, or how to get in touch.",
     prompts: ['Who is Shaila?', 'Bungalow', 'Case studies', 'Contact', 'GupShup'],
     about:
-      'Shaila Rizvi is a New York–based interior designer. She blends elegance and purpose, crafting spaces with contemporary comfort and exclusive aesthetics. She holds a Master\'s in Interior Design from Parsons School of Design, and pairs space conceptualization with strong project management.',
+      'Shaila Rizvi is a New York based interior designer. She blends elegance and purpose, crafting spaces with contemporary comfort and exclusive aesthetics. She holds a Master\'s in Interior Design from Parsons School of Design, and pairs space conceptualization with strong project management.',
     philosophy:
-      'Shaila creates wonderful spaces for people to dwell, work, and socialize — personalized, custom design solutions for restaurants, homes, and immersive environments.',
+      'Shaila creates wonderful spaces for people to dwell, work, and socialize: personalized, custom design solutions for restaurants, homes, and immersive environments.',
     contact:
       'Reach Shaila at info@shailarizvi.com or 201-478-2333. The studio address is 560 Main St., New York, NY 10044.',
     address: '560 Main St., New York, NY 10044',
@@ -23,7 +23,7 @@
       bungalow: {
         path: '/desing-cms/bungalow/',
         blurb:
-          'Bungalow in NYC\'s East Village is a luxe retreat inspired by vintage Indian upscale living — jewel tones, custom brass and teak, and an immersive bungalow atmosphere.',
+          'Bungalow in NYC\'s East Village is a luxe retreat inspired by vintage Indian upscale living: jewel tones, custom brass and teak, and an immersive bungalow atmosphere.',
       },
       'chote miya': {
         path: '/desing-cms/chote-miya/',
@@ -33,7 +33,7 @@
       gupshup: {
         path: '/desing-cms/gupshup/',
         blurb:
-          'GupShup (Bombay House) in Gramercy Park evokes 1970s Bombay — jewel-toned textiles, vintage glamour, and eclectic décor sourced from India.',
+          'GupShup (Bombay House) in Gramercy Park evokes 1970s Bombay: jewel-toned textiles, vintage glamour, and eclectic décor sourced from India.',
       },
       ammi: {
         path: '/desing-cms/ammi/',
@@ -79,7 +79,7 @@
     if (includesAny(text, ['help', 'what can you do', 'what do you know'])) {
       return {
         message:
-          'I can introduce Shaila, walk you through case studies — Bungalow, Chote Miya, GupShup, Ammi, and Zindagi Kashmakash — or share contact details.',
+          'I can introduce Shaila, walk you through case studies: Bungalow, Chote Miya, GupShup, Ammi, and Zindagi Kashmakash, or share contact details.',
         path: null,
       }
     }

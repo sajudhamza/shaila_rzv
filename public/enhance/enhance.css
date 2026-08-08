@@ -1,4 +1,4 @@
-/* Shaila Rizvi — enhancement layer
+/* Shaila Rizvi - enhancement layer
    Preserves Webflow brand: editorial serif, photography, rose accent */
 
 :root {
@@ -10,6 +10,27 @@
   --sr-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* CMS-injected case study cover */
+.sr-cms-cover-link {
+  display: block;
+  overflow: hidden;
+  margin-top: 1.25rem;
+}
+
+.sr-cms-cover-link .showcase-img {
+  width: 100%;
+  transition: transform 1.1s var(--sr-ease);
+}
+
+.sr-cms-cover-link:hover .showcase-img {
+  transform: scale(1.03);
+}
+
+.sr-cms-case .marque-link {
+  display: inline-flex;
+  margin-top: 0.75rem;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -19,7 +40,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* —— Preloader —— */
+/* Preloader */
 .preloder {
   transition: opacity 0.85s var(--sr-ease), visibility 0.85s var(--sr-ease);
 }
@@ -34,7 +55,7 @@ body.sr-ready .preloder {
   filter: drop-shadow(0 0 18px var(--sr-rose-soft));
 }
 
-/* —— Soft film grain + vignette over the page —— */
+/* Soft film grain + vignette over the page */
 .sr-atmosphere {
   pointer-events: none;
   position: fixed;
@@ -63,7 +84,7 @@ body.sr-scrolled .sr-vignette {
   opacity: 0.25;
 }
 
-/* —— Hero —— */
+/* Hero */
 .section.is-hero::after {
   content: '';
   position: absolute;
@@ -79,7 +100,7 @@ body.sr-scrolled .sr-vignette {
   );
 }
 
-/* Keep Webflow absolute positioning — only raise stacking where needed */
+/* Keep Webflow absolute positioning - only raise stacking where needed */
 .section.is-hero .hero-wrappar {
   z-index: 2;
 }
@@ -159,7 +180,7 @@ a[href*='#'] h3 {
   }
 }
 
-/* —— Scroll reveals —— */
+/* Scroll reveals */
 .sr-reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -184,7 +205,7 @@ a[href*='#'] h3 {
   transition-delay: 0.24s;
 }
 
-/* —— About —— */
+/* About */
 .about-content-wrappar,
 .about-top-wrap {
   transition: transform 0.6s var(--sr-ease);
@@ -200,7 +221,7 @@ a[href*='#'] h3 {
   transform: scale(1.06);
 }
 
-/* —— Case studies —— */
+/* Case studies */
 .case-study-one,
 .case-study-box-wrappar,
 .left-case-study {
@@ -275,7 +296,7 @@ a[href*='#'] h3 {
   transform: translateY(-6px);
 }
 
-/* —— Contact —— */
+/* Contact */
 .section:has(h1),
 footer,
 .page-wrap {
@@ -316,7 +337,7 @@ h1 {
   color: var(--sr-paper) !important;
 }
 
-/* —— Case study detail pages —— */
+/* Case study detail pages */
 .w-lightbox-backdrop {
   backdrop-filter: blur(8px);
 }
@@ -336,7 +357,7 @@ a[href='/'] {
   transition: opacity 0.3s ease;
 }
 
-/* —— Reduced motion —— */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
