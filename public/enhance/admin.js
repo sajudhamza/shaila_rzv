@@ -431,8 +431,27 @@
     return wrap
   }
 
+  function findLegacyCover(project) {
+    const needles = [project.slug, project.name, project.name?.replace(/\s+/g, '-')].filter(Boolean)
+    const blocks = document.querySelectorAll('.case--study-spacing:not(.sr-cms-case)')
+    for (const block of blocks) {
+      const label = (block.textContent || '').toLowerCase()
+      const hit = needles.some((n) => label.includes(String(n).toLowerCase().replace(/-/g, ' ')) || label.includes(String(n).toLowerCase()))
+      if (!hit) continue
+      const img = [...block.querySelectorAll('img.showcase-img, img')].find((el) => {
+        const src = el.getAttribute('src') || ''
+        return src && !src.includes('placeholder')
+      })
+      if (img) return img.currentSrc || img.getAttribute('src')
+    }
+    return ''
+  }
+
   function buildCaseStudyBlock(project) {
-    const cover = project.images?.[0] || '/webflow/plugins/Basic/assets/placeholder.60f9b1840c.svg'
+    const cover =
+      project.images?.[0] ||
+      findLegacyCover(project) ||
+      '/webflow/plugins/Basic/assets/placeholder.60f9b1840c.svg'
     const section = document.createElement('div')
     section.className = 'case--study-spacing sr-cms-case'
     section.dataset.cmsSlug = project.slug

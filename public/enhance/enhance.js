@@ -7,9 +7,41 @@
 
   function markReady() {
     document.body.classList.add('sr-ready')
+    const pre = document.querySelector('.preloder')
+    if (pre) {
+      pre.style.opacity = '0'
+      pre.style.visibility = 'hidden'
+      pre.style.pointerEvents = 'none'
+      // Fully remove from layout after the fade so it cannot block the hero.
+      setTimeout(() => {
+        pre.style.display = 'none'
+      }, 900)
+    }
+  }
+
+  function prepareHeroImages() {
+    document.querySelectorAll('.section.is-hero .hero-slider-img').forEach((img, i) => {
+      img.loading = 'eager'
+      img.decoding = 'async'
+      img.fetchPriority = i === 0 ? 'high' : 'auto'
+      // If a srcset candidate 404s in some hosts, fall back to the base src.
+      img.addEventListener(
+        'error',
+        () => {
+          if (img.dataset.srFallback) return
+          img.dataset.srFallback = '1'
+          img.removeAttribute('srcset')
+          img.removeAttribute('sizes')
+          if (img.getAttribute('src')) img.src = img.getAttribute('src')
+        },
+        { once: true },
+      )
+    })
   }
 
   function onLoad() {
+    prepareHeroImages()
+
     // Hide preloader after animation window (or sooner if already gone)
     const pre = document.querySelector('.preloder')
     const start = performance.now()
@@ -26,9 +58,6 @@
       }
       if (elapsed >= FALLBACK_MS) {
         markReady()
-        if (pre) {
-          pre.style.display = 'none'
-        }
         return true
       }
       return false

@@ -105,9 +105,27 @@ body.sr-scrolled .sr-vignette {
   z-index: 2;
 }
 
+/* Hero slider must fill the viewport; Webflow default .w-slider is grey #ddd */
+.section.is-hero .slider.w-slider {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  z-index: 0;
+}
+
+.section.is-hero .hero-mask.w-slider-mask,
+.section.is-hero .w-slide {
+  height: 100%;
+}
+
 .hero-slider-img {
   transform: scale(1.04);
   transition: transform 8s linear;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .w-slide.w-active .hero-slider-img,
