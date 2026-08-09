@@ -835,6 +835,16 @@
     document.querySelectorAll('.sr-cms-case').forEach((n) => n.remove())
 
     if (caseSection && projects.length) {
+      // Hide the entire original Webflow project rows (text + showcase images).
+      // Hiding only .case--study-spacing left orphaned .showcase-img strips
+      // between the about slider and the first CMS project (Bungalow).
+      caseSection.querySelectorAll('.w-dyn-item').forEach((n) => {
+        if (n.classList.contains('sr-cms-case') || n.classList.contains('sr-cms-chip')) return
+        if (n.closest('.all-case-study-section')) return
+        if (!n.querySelector('.showcase-img, .case--study-spacing')) return
+        n.style.display = 'none'
+        n.setAttribute('data-sr-replaced', 'true')
+      })
       caseSection.querySelectorAll('.case--study-spacing:not(.sr-cms-case)').forEach((n) => {
         n.style.display = 'none'
         n.setAttribute('data-sr-replaced', 'true')
@@ -844,7 +854,12 @@
     if (caseSection && projects.length) {
       const frag = document.createDocumentFragment()
       projects.forEach((project) => frag.appendChild(buildCaseStudyBlock(project)))
-      if (allSection && caseSection.contains(allSection)) {
+      const list = caseSection.querySelector('.w-dyn-list')
+      if (list && list.parentNode) {
+        // Place CMS projects immediately after the (now hidden) original list
+        // so Bungalow is the first thing below the about slider.
+        list.parentNode.insertBefore(frag, list.nextSibling)
+      } else if (allSection && caseSection.contains(allSection)) {
         caseSection.insertBefore(frag, allSection)
       } else {
         caseSection.appendChild(frag)

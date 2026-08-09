@@ -312,10 +312,21 @@ a[href*='#'] h3 {
 }
 
 /*
-  About slider: match live sticky horizontal intro.
-  Keep native 300vh track + both image panels (moving-img / text-img)
-  so scroll-linked "images behind" compositions work.
+  About slider: keep the intro composition (text + side/behind image),
+  then go straight into Case Studies (Bungalow). Extra full-bleed photo
+  panels after the intro were removed from the HTML; shorten the sticky
+  track so those images are not scrolled through.
 */
+.horijontle-scroling-section.hide {
+  height: 100vh;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.horijontle-scroling-section .frame > .row_one:not(.more-width) {
+  display: none !important;
+}
+
 .horijontle-scroling-section .div-block-10,
 .horijontle-scroling-section .moving-img {
   opacity: 1 !important;
