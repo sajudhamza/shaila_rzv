@@ -98,13 +98,14 @@
   }
 
   function mountChrome() {
-    if (document.querySelector('.sr-admin-fab')) return
+    if (document.querySelector('#sr-admin-fab')) return
 
     const fab = el('button', {
       type: 'button',
       className: 'sr-admin-fab',
       text: getToken() ? 'Manage' : 'Login',
       id: 'sr-admin-fab',
+      'aria-label': getToken() ? 'Manage projects' : 'Studio login',
     })
     fab.addEventListener('click', () => openPanel())
 
@@ -113,7 +114,17 @@
       if (e.target === overlay) closePanel()
     })
 
-    document.body.append(fab, overlay)
+    // Top-left only: keeps clear of the menu orb (top-right) and AI assistant (bottom-right).
+    const projectNav = document.querySelector('.srp-header .srp-nav')
+    if (projectNav) {
+      fab.classList.add('sr-admin-fab--header')
+      projectNav.appendChild(fab)
+    } else {
+      fab.classList.add('sr-admin-fab--corner')
+      document.body.appendChild(fab)
+    }
+
+    document.body.appendChild(overlay)
     state.loggedIn = Boolean(getToken())
     updateFab()
   }
