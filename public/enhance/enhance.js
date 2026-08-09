@@ -39,8 +39,30 @@
     })
   }
 
+  function prepareAboutImages() {
+    document
+      .querySelectorAll('.horijontle-scroling-section .moving-img, .horijontle-scroling-section .text-img')
+      .forEach((img, i) => {
+        img.loading = 'eager'
+        img.decoding = 'async'
+        img.fetchPriority = i === 0 ? 'high' : 'auto'
+        img.addEventListener(
+          'error',
+          () => {
+            if (img.dataset.srFallback) return
+            img.dataset.srFallback = '1'
+            img.removeAttribute('srcset')
+            img.removeAttribute('sizes')
+            if (img.getAttribute('src')) img.src = img.getAttribute('src')
+          },
+          { once: true },
+        )
+      })
+  }
+
   function onLoad() {
     prepareHeroImages()
+    prepareAboutImages()
 
     // Hide preloader after animation window (or sooner if already gone)
     const pre = document.querySelector('.preloder')
@@ -95,7 +117,7 @@
       '.case-study-grid',
       '.case-study-one',
       '.case-study-box-wrappar',
-      '.horijontle-scroling-section',
+      // Do not fade the whole about sticky track — it blanks the images-behind slider.
       '.paragraph-wrappar',
       '.left-content',
     ]

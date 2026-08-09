@@ -115,17 +115,25 @@ body.sr-scrolled .sr-vignette {
   z-index: 0;
 }
 
-.section.is-hero .hero-mask.w-slider-mask,
+.section.is-hero .hero-mask.w-slider-mask {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 .section.is-hero .w-slide {
   height: 100%;
+  width: 100%;
 }
 
 .hero-slider-img {
   transform: scale(1.04);
   transition: transform 8s linear;
   object-fit: cover;
+  object-position: center;
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 .w-slide.w-active .hero-slider-img,
@@ -303,20 +311,23 @@ a[href*='#'] h3 {
   background-size: 100% 1px;
 }
 
-/* Keep the sticky sliding about intro. Photos under it stay removed,
-   so shorten the old multi-panel scroll track (was sized for those images). */
-.horijontle-scroling-section.hide {
-  height: 120vh;
+/*
+  About slider: match live sticky horizontal intro.
+  Keep native 300vh track + both image panels (moving-img / text-img)
+  so scroll-linked "images behind" compositions work.
+*/
+.horijontle-scroling-section .div-block-10,
+.horijontle-scroling-section .moving-img {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .horijontle-scroling-section .moving-img,
-.horijontle-scroling-section .text-img,
-.horijontle-scroling-section .div-block-10,
-.horijontle-scroling-section .frame > .row_one:not(.more-width) {
-  display: none !important;
+.horijontle-scroling-section .text-img {
+  object-fit: cover;
 }
 
-/* Horizontal showcase strip */
+/* Horizontal showcase strip (case-study chips inside about track, if any) */
 .horijontle-scroling-section .w-dyn-item,
 .horijontle-scroling-section a {
   transition: transform 0.5s var(--sr-ease), opacity 0.5s ease;
