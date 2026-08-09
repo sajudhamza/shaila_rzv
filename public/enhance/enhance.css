@@ -303,42 +303,16 @@ a[href*='#'] h3 {
   background-size: 100% 1px;
 }
 
-/* About intro: drop the old multi-image camera scroll so content flows into Bungalow */
-.horijontle-scroling-section,
+/* Keep the sticky sliding about intro. Photos under it stay removed,
+   so shorten the old multi-panel scroll track (was sized for those images). */
 .horijontle-scroling-section.hide {
-  height: auto !important;
-  min-height: 0 !important;
-  padding-top: 6vw !important;
-  padding-bottom: 4vw !important;
-}
-
-.horijontle-scroling-section .camera,
-.horijontle-scroling-section .frame,
-.horijontle-scroling-section .row_one,
-.horijontle-scroling-section .row_one.more-width.mid-card,
-.horijontle-scroling-section .stickey-camero-one,
-.horijontle-scroling-section .first-frame-content {
-  position: relative !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  height: auto !important;
-  overflow: visible !important;
-}
-
-.horijontle-scroling-section .first-frame-content {
-  display: block !important;
-  padding-left: 6vw !important;
-  padding-right: 6vw !important;
-}
-
-.horijontle-scroling-section .left-content + .left-content {
-  margin-top: 1.5rem;
+  height: 120vh;
 }
 
 .horijontle-scroling-section .moving-img,
 .horijontle-scroling-section .text-img,
 .horijontle-scroling-section .div-block-10,
-.horijontle-scroling-section > .camera .row_one:not(.more-width) {
+.horijontle-scroling-section .frame > .row_one:not(.more-width) {
   display: none !important;
 }
 
