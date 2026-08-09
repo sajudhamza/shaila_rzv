@@ -341,10 +341,25 @@ function buildProjectPage(project) {
     }
 
     <section class="srp-section srp-journal">
-      <h2>Journal</h2>
+      <div class="srp-journal-head">
+        <h2>Journal</h2>
+        ${
+          journal
+            ? `<div class="srp-journal-controls" aria-hidden="false">
+          <button type="button" class="srp-journal-btn" data-journal-prev aria-label="Previous journal image">‹</button>
+          <button type="button" class="srp-journal-btn" data-journal-next aria-label="Next journal image">›</button>
+        </div>`
+            : ''
+        }
+      </div>
       ${
         journal
-          ? `<div class="srp-journal-grid">${journal}</div>`
+          ? `<div class="srp-journal-slider" data-journal-slider tabindex="0" aria-label="Journal image slider">
+        <div class="srp-journal-track">
+          ${journal}
+        </div>
+      </div>
+      <p class="srp-journal-hint">Scroll sideways to browse journal images</p>`
           : `<p class="srp-lead srp-journal-empty">Coming Soon</p>`
       }
     </section>
@@ -354,6 +369,7 @@ function buildProjectPage(project) {
     <a href="/">Back to Shaila Rizvi</a>
   </footer>
   <script src="/enhance/admin.js" defer></script>
+  <script src="/enhance/project-page.js" defer></script>
 </body>
 </html>
 `

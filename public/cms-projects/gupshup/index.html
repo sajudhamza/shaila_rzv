@@ -96,8 +96,16 @@
     </section>
 
     <section class="srp-section srp-journal">
-      <h2>Journal</h2>
-      <div class="srp-journal-grid">
+      <div class="srp-journal-head">
+        <h2>Journal</h2>
+        <div class="srp-journal-controls" aria-hidden="false">
+          <button type="button" class="srp-journal-btn" data-journal-prev aria-label="Previous journal image">‹</button>
+          <button type="button" class="srp-journal-btn" data-journal-next aria-label="Next journal image">›</button>
+        </div>
+      </div>
+      <div class="srp-journal-slider" data-journal-slider tabindex="0" aria-label="Journal image slider">
+        <div class="srp-journal-track">
+          
       <article class="srp-journal-item">
         <div class="srp-journal-media">
           <img src="/cms-projects/gupshup/journal/journal-01-663aff08af01e9cced1ca7be_gupflower.jpg" alt="GupShup journal 1" loading="lazy" />
@@ -117,7 +125,10 @@
           <img src="/cms-projects/gupshup/journal/journal-03-663aff077a7a7f08fe8f3686_GUP-ART.jpg" alt="GupShup journal 3" loading="lazy" />
         </div>
         
-      </article></div>
+      </article>
+        </div>
+      </div>
+      <p class="srp-journal-hint">Scroll sideways to browse journal images</p>
     </section>
   </main>
 
@@ -125,5 +136,6 @@
     <a href="/">Back to Shaila Rizvi</a>
   </footer>
   <script src="/enhance/admin.js" defer></script>
+  <script src="/enhance/project-page.js" defer></script>
 </body>
 </html>

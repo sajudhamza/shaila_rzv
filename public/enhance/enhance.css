@@ -312,19 +312,14 @@ a[href*='#'] h3 {
 }
 
 /*
-  About slider: keep the intro composition (text + side/behind image),
-  then go straight into Case Studies (Bungalow). Extra full-bleed photo
-  panels after the intro were removed from the HTML; shorten the sticky
-  track so those images are not scrolled through.
+  About slider: sticky horizontal track must be tall enough that the
+  user finishes the slide (IX2 translate) before the page moves down
+  into Case Studies / Bungalow. Match live Webflow height (300vh).
 */
 .horijontle-scroling-section.hide {
-  height: 100vh;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.horijontle-scroling-section .frame > .row_one:not(.more-width) {
-  display: none !important;
+  height: 300vh;
+  padding-top: 7vw;
+  padding-bottom: 4vw;
 }
 
 .horijontle-scroling-section .div-block-10,

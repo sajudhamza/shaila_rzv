@@ -87,8 +87,16 @@
     </section>
 
     <section class="srp-section srp-journal">
-      <h2>Journal</h2>
-      <div class="srp-journal-grid">
+      <div class="srp-journal-head">
+        <h2>Journal</h2>
+        <div class="srp-journal-controls" aria-hidden="false">
+          <button type="button" class="srp-journal-btn" data-journal-prev aria-label="Previous journal image">‹</button>
+          <button type="button" class="srp-journal-btn" data-journal-next aria-label="Next journal image">›</button>
+        </div>
+      </div>
+      <div class="srp-journal-slider" data-journal-slider tabindex="0" aria-label="Journal image slider">
+        <div class="srp-journal-track">
+          
       <article class="srp-journal-item">
         <div class="srp-journal-media">
           <img src="/cms-projects/ammi/journal/journal-01-664416f79cb91a97ddfcd477_a39cfe45-9c67-4421-9425-72a267.jpg" alt="Ammi journal 1" loading="lazy" />
@@ -143,7 +151,10 @@
           <img src="/cms-projects/ammi/journal/journal-08-664416f752d30eb265a3d147_b930fae2-82c1-4821-a1d0-c5f616.jpg" alt="Ammi journal 8" loading="lazy" />
         </div>
         
-      </article></div>
+      </article>
+        </div>
+      </div>
+      <p class="srp-journal-hint">Scroll sideways to browse journal images</p>
     </section>
   </main>
 
@@ -151,5 +162,6 @@
     <a href="/">Back to Shaila Rizvi</a>
   </footer>
   <script src="/enhance/admin.js" defer></script>
+  <script src="/enhance/project-page.js" defer></script>
 </body>
 </html>

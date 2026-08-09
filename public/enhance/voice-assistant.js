@@ -15,10 +15,10 @@
     philosophy:
       'Shaila creates wonderful spaces for people to dwell, work, and socialize: personalized, custom design solutions for restaurants, homes, and immersive environments.',
     contact:
-      'Reach Shaila at info@shailarizvi.com or 201-478-2333. The studio address is 560 Main St., New York, NY 10044.',
-    address: '560 Main St., New York, NY 10044',
+      'Reach Shaila at Shaila@bungalowny.com or 201-478-2333. The studio address is 10 River Road, NY, NY- 10044.',
+    address: '10 River Road, NY, NY- 10044',
     phone: '201-478-2333',
-    email: 'info@shailarizvi.com',
+    email: 'Shaila@bungalowny.com',
     studies: {
       bungalow: {
         path: '/desing-cms/bungalow/',
@@ -140,7 +140,7 @@
     if (includesAny(text, ['career', 'job', 'hire', 'work with', 'collaborate'])) {
       return {
         message:
-          'For collaborations or career inquiries, email info@shailarizvi.com or call 201-478-2333.',
+          'For collaborations or career inquiries, email Shaila@bungalowny.com or call 201-478-2333.',
         path: '/#get-in-touch',
       }
     }
