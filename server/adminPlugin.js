@@ -340,14 +340,14 @@ function buildProjectPage(project) {
         : emptyHint
     }
 
-    ${
-      journal
-        ? `<section class="srp-section srp-journal">
+    <section class="srp-section srp-journal">
       <h2>Journal</h2>
-      <div class="srp-journal-grid">${journal}</div>
-    </section>`
-        : ''
-    }
+      ${
+        journal
+          ? `<div class="srp-journal-grid">${journal}</div>`
+          : `<p class="srp-lead srp-journal-empty">Coming Soon</p>`
+      }
+    </section>
   </main>
 
   <footer class="srp-footer">
@@ -669,7 +669,22 @@ async function handleDeleteProject(req, res, slug) {
 export function shailaAdminPlugin() {
   const mount = (middlewares) => {
     middlewares.use(async (req, res, next) => {
-      const url = req.url?.split('?')[0]
+      const rawUrl = req.url || '/'
+      const url = rawUrl.split('?')[0]
+
+      // Serve /cms-projects/<slug>/ as that folder's index.html in Vite public/
+      const cmsPage = url.match(/^\/cms-projects\/([^/]+)\/?$/)
+      if (cmsPage && req.method === 'GET') {
+        const slug = decodeURIComponent(cmsPage[1])
+        const indexPath = path.join(CMS_DIR, slug, 'index.html')
+        if (fs.existsSync(indexPath)) {
+          res.setHeader('Content-Type', 'text/html; charset=utf-8')
+          res.statusCode = 200
+          res.end(fs.readFileSync(indexPath, 'utf8'))
+          return
+        }
+      }
+
       if (url === '/api/admin/login') return handleLogin(req, res)
       if (url === '/api/admin/logout') return handleLogout(req, res)
       if (url === '/api/projects' && req.method === 'GET') return handleGetProjects(req, res)

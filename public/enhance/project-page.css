@@ -118,10 +118,32 @@
   gap: 1.5rem;
 }
 
+.srp-journal-item {
+  margin: 0;
+}
+
+.srp-journal-media {
+  overflow: hidden;
+  background: #1a1714;
+}
+
+.srp-journal-media img {
+  transition: transform 0.6s ease;
+}
+
+.srp-journal-item:hover .srp-journal-media img {
+  transform: scale(1.03);
+}
+
 .srp-journal-caption {
   margin: 0.75rem 0 0;
   font-size: 0.92rem;
   color: var(--srp-muted);
+}
+
+.srp-journal-empty {
+  font-style: italic;
+  opacity: 0.75;
 }
 
 /* Admin chrome */
