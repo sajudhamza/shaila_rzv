@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const CMS_DIR = path.join(ROOT, 'public', 'cms-projects')
 const PROJECTS_FILE = path.join(CMS_DIR, 'projects.json')
+const REMOVED_FILE = path.join(CMS_DIR, 'removed.json')
 
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif'])
 const tokens = new Map()
@@ -17,48 +18,60 @@ const SEED_PROJECTS = [
     id: 'bungalow',
     slug: 'bungalow',
     name: 'Bungalow',
-    description:
+    summary:
       "Bungalow in NYC's East Village: A luxe retreat inspired by vintage Indian living, meticulously crafted.",
+    description:
+      'Located in the East Village of New York City, Bungalow transports guests to the opulence of vintage Indian upscale living. Inspired by British-era buildings in India, it embodies the essence of luxury associated with bungalows, once homes to eminent individuals and social clubs. Despite facing challenges of a cellar space with low ceilings, the design meticulously crafted an ambiance reminiscent of a traditional bungalow. As guests step through the entrance, they are greeted by a striking mural at the host station, setting the tone for the luxurious experience that awaits. The Library & Bar lounge beckons with its inviting atmosphere, while the Dining area offers a feast for the senses with its unique design elements. Booth seating resembling balconies and a serene skylight area further immerse guests in an outdoor garden/verandah feel. The interior design narrative is woven with jewel tone colors like amber, emerald, and ruby, combined with soft pastel shades commonly found in old Indian architectures. Each hue and tactile element, carefully custom-made in brass, glass, and wood, enriches the guest experience with layers of cultural depth and visual allure. Every detail is carefully considered, from the custom-made furniture, decor pieces, and lighting fixtures meticulously crafted in Delhi, Jaipur, and Gurgaon, ensuring authenticity and quality. Unlike traditional softwood bentwood, bespoke wooden chairs are crafted from teak wood, adding a touch of sophistication to the space. All the oil paintings in the lounge area are hand-painted, and every illustration on the branding is hand-sketched to reflect the physical space accurately. Through virtual collaboration and regular video calls, every aspect of the design, from upholstery to wood finishes, was decided with precision and care. The customization of wall lights and chandeliers posed significant challenges, yet the team persevered, translating hand-drawn designs into exquisite brass fixtures with cut and frosted glass finishes, resulting in a truly breathtaking aesthetic. Bungalow is more than just a restaurant; it is an immersive experience curated to evoke a sense of home and leisure, where every detail reflects the nostalgia and charm of the bygone era.',
     legacyHref: '/desing-cms/bungalow/',
   },
   {
     id: 'chote-miya',
     slug: 'chote-miya',
     name: 'Chote Miya',
-    description:
+    summary:
       "Chote Miya: A vibrant tribute to 90's India, blending street flavors with nostalgic ambiance in NYC.",
+    description:
+      "Chote Miya is a vibrant ode to the streets of India. The space, formerly a meat store, undergoes a remarkable transformation. Our approach unfolds with a nostalgic glance back to 90s India, a time of thriving local brands and tantalizing street treats. The space layout is designed to accommodate a large kitchen, a front cash and food dispersal counter, a seating area, and a large display cabinet. A communal table beckons patrons to gather and savor the flavors of India amidst famous grocery items on display and Bollywood melodies, embracing an eclectic narrative steeped in nostalgia. Drawing inspiration from Bombay's Irani cafes and the vernacular of its bustling streets, the space is adorned with teak wood millwork and furniture. Vintage advertising posters on wall frames ignite a sense of homecoming for guests. Tube lights hang with modern simplicity, while iconic bentwood chairs and bespoke graphical artwork create a departure from convention, evoking a welcoming ambiance throughout. The color scheme mirrors the vibrancy of Indian streets, with the main signboard serving as an invitation to an Indian street. Inside, a towering wall mural adorned with matchbox art depicts the essence of Bombay life in vivid detail, from colorful taxis to iconic double-decker buses. Inspired by the whimsical quotes adorning Indian trucks and buses, the graphic design used in the space adds a playful touch. Quotations like tip top, free wi-fi, high class, and freshly made adorn the display cabinet top shelves and other areas, adding to the authenticity and charm. Chote Miya's design is a journey through the bustling streets of India, a celebration of culture, flavor, and community. For the bustling metropolis of New York, it is a cherished escape into a world of vibrant authenticity.",
     legacyHref: '/desing-cms/chote-miya/',
   },
   {
     id: 'gupshup',
     slug: 'gupshup',
     name: 'GupShup',
-    description:
+    summary:
       'GupShup (Bombay House) in NYC: 1970s Bombay nostalgia meets vibrant ambiance, blending Indian culture with creativity.',
+    description:
+      "GupShup is a nostalgic journey back to the 1970s Bombay-era Parsi home, reimagined in New York City. Nestled in Gramercy Park, GupShup exudes a captivating ambiance, adorned with intricate design elements such as charming light fixtures, jewel toned textiles, vibrant artwork, and a captivating display Dabba/tiffin wall. The design is a blend of talent from This is it Designs in Delhi and the creative prowess of Keith+Lead. Since its inception in 2018, our role has been integral to the brand, sourcing unique elements like enchanting bicycles, eye-catching mirrors, distressed wood sideboards, furniture and other decor from India. This role also involved orchestrating outdoor space, infusing special events with bespoke interior decorations, and rebranding GupShup's collaterals. The restaurant's retro charm allows for a diverse and eclectic narrative that resonates deeply with its patrons.",
     legacyHref: '/desing-cms/gupshup/',
   },
   {
     id: 'ammi',
     slug: 'ammi',
     name: 'Ammi',
-    description:
+    summary:
       'Ammi at Pier 57, NYC: Homestyle Indian cuisine, vibrant design, and open kitchen for immersive dining.',
+    description:
+      "Ammi, located within Pier 57 in New York, offers a delightful tribute to the comforting homestyle cuisine of India. Within the bustling food court of Market 57 Station, Ammi's kiosk space welcomes visitors with a charming design, adorned with marigold flowers and an inviting orange and green color scheme. Upon entering Ammi, guests are greeted by the uplifting sight of marigolds. The open cooking concept of Ammi demanded a functional and contemporary layout, meticulously designed to optimize efficiency in the cooking, cash, and food dispersal areas. The seamless integration of the kitchen space with the customer-facing areas allows patrons to witness the culinary craftsmanship firsthand. With its vibrant decor, fresh herb accents, and cozy home kitchen atmosphere, Ammi beckons guests to embark on a culinary voyage that celebrates the heartwarming flavors and traditions of Indian home cooking.",
     legacyHref: '/desing-cms/ammi/',
   },
   {
     id: 'movie',
     slug: 'movie',
     name: 'Zindagi Kashmakash',
-    description:
+    summary:
       "Zindagi Kashmakash set design crafted to match the film's narrative, era and style with visually compelling interiors.",
+    description:
+      "The set design for the film Zindagi Kashmakash was crafted to match the film's narrative, era, and style, ensuring the spaces were visually compelling and functional. The lead actor's room, set on a terrace, featured a boho, free-spirited style to reflect her creative and unconventional personality. In contrast, her sister, a doctor, had a space designed with muted tones and a minimalistic aesthetic, mirroring her disciplined and reserved nature. These design choices effectively conveyed each character's personality and lifestyle, enriching the narrative and deepening the audience's connection to the characters.",
     legacyHref: '/desing-cms/movie/',
   },
   {
     id: 'punjab-meet-house',
     slug: 'punjab-meet-house',
     name: 'Punjab Meet House',
+    summary:
+      'Punjab Meet House in Jersey City: an upscale casual dining room shaped around the warmth of a Punjabi home.',
     description:
-      'Punjab Meet House in Jersey City: an upscale casual dining room shaped around the warmth of a Punjabi home. Designed by Shaila Rizvi Studio with Phulkari-inspired color, handcrafted furnishings, Indian imports, layered textures, and soft lighting across about 2,245 sq ft at Haus25, Exchange Place.',
+      'Punjab Meet House sits on the ground floor of Haus25 at 25 Christopher Columbus Drive in Jersey City, spanning about 2,245 square feet near Exchange Place. Designed by Shaila Rizvi Studio, the upscale casual dining room was shaped to evoke the warmth and hospitality of a Punjabi home. The interior draws on the artistic heritage of the Indian subcontinent through handcrafted furnishings, decorative elements, and authentic imports from India. Warm materials, layered textures, carefully considered lighting, and distinctive architectural details create an environment that feels immersive without becoming theatrical. Vibrant color, Phulkari-inspired pattern, and soft lighting support an atmosphere of refined comfort for both table and bar seating, letting cultural influence come through thoughtfully rather than as ornament alone.',
     legacyHref: null,
   },
 ]
@@ -122,6 +135,36 @@ function readProjectsRaw() {
 function writeProjects(projects) {
   ensureCms()
   fs.writeFileSync(PROJECTS_FILE, `${JSON.stringify(projects, null, 2)}\n`, 'utf8')
+}
+
+function readRemovedSlugs() {
+  ensureCms()
+  try {
+    const data = JSON.parse(fs.readFileSync(REMOVED_FILE, 'utf8'))
+    return new Set(Array.isArray(data) ? data.map(String) : [])
+  } catch {
+    return new Set()
+  }
+}
+
+function writeRemovedSlugs(set) {
+  ensureCms()
+  fs.writeFileSync(REMOVED_FILE, `${JSON.stringify([...set], null, 2)}\n`, 'utf8')
+}
+
+function safeUnlinkUnder(dir, filename) {
+  const base = path.basename(String(filename || ''))
+  if (!base || base === '.' || base === '..') return false
+  const full = path.join(dir, base)
+  if (!full.startsWith(dir)) return false
+  if (!fs.existsSync(full)) return false
+  fs.unlinkSync(full)
+  return true
+}
+
+function removeDirRecursive(dir) {
+  if (!fs.existsSync(dir)) return
+  fs.rmSync(dir, { recursive: true, force: true })
 }
 
 function slugify(name) {
@@ -258,13 +301,16 @@ function buildProjectPage(project) {
       <p class="srp-lead">Add images to <code>public/cms-projects/${escapeHtml(project.slug)}/images/</code> and refresh.</p>
     </section>`
 
+  const meta = escapeHtml((project.summary || project.description || '').slice(0, 160))
+  const leadHtml = formatLeadHtml(project.description || project.summary || '')
+
   return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${escapeHtml(project.name)} | Shaila Rizvi</title>
-  <meta name="description" content="${escapeHtml((project.description || '').slice(0, 160))}" />
+  <meta name="description" content="${meta}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -281,9 +327,8 @@ function buildProjectPage(project) {
 
   <main>
     <section class="srp-hero">
-      <p class="srp-kicker">Case Study</p>
       <h1>${escapeHtml(project.name)}</h1>
-      <p class="srp-lead">${escapeHtml(project.description || '')}</p>
+      <div class="srp-lead">${leadHtml}</div>
     </section>
 
     ${
@@ -308,17 +353,43 @@ function buildProjectPage(project) {
   <footer class="srp-footer">
     <a href="/">Back to Shaila Rizvi</a>
   </footer>
+  <script src="/enhance/admin.js" defer></script>
 </body>
 </html>
 `
 }
 
+function formatLeadHtml(text = '') {
+  const cleaned = String(text).replace(/\u200d/g, '').trim()
+  if (!cleaned) return ''
+  // Keep full case-study copy readable as paragraphs on the detail page.
+  const parts = cleaned
+    .split(/(?<=\.)\s+(?=[A-Z])/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+  const chunks = []
+  let buf = ''
+  for (const part of parts) {
+    buf = buf ? `${buf} ${part}` : part
+    if (buf.length >= 320) {
+      chunks.push(buf)
+      buf = ''
+    }
+  }
+  if (buf) chunks.push(buf)
+  return (chunks.length ? chunks : [cleaned])
+    .map((p) => `<p>${escapeHtml(p)}</p>`)
+    .join('\n      ')
+}
+
 function mergeSeedProjects(existing) {
+  const removed = readRemovedSlugs()
   const bySlug = new Map()
   existing.forEach((p) => {
     if (p?.slug) bySlug.set(p.slug, p)
   })
   SEED_PROJECTS.forEach((seed) => {
+    if (removed.has(seed.slug)) return
     if (!bySlug.has(seed.slug)) {
       bySlug.set(seed.slug, { ...seed, images: [], journal: [], createdAt: new Date().toISOString() })
     } else {
@@ -327,6 +398,8 @@ function mergeSeedProjects(existing) {
         ...seed,
         ...cur,
         name: cur.name || seed.name,
+        summary: cur.summary || seed.summary || '',
+        // Prefer saved copy so admin edits are never overwritten by seed text.
         description: cur.description || seed.description,
         legacyHref: cur.legacyHref ?? seed.legacyHref,
       })
@@ -336,7 +409,7 @@ function mergeSeedProjects(existing) {
   const seedSlugs = SEED_PROJECTS.map((p) => p.slug)
   const ordered = seedSlugs.map((s) => bySlug.get(s)).filter(Boolean)
   bySlug.forEach((p, slug) => {
-    if (!seedSlugs.includes(slug)) ordered.push(p)
+    if (!seedSlugs.includes(slug) && !removed.has(slug)) ordered.push(p)
   })
   return ordered
 }
@@ -452,10 +525,16 @@ async function handleCreateProject(req, res) {
       }
     })
 
+    const summary = String(body.summary || '').trim() || description.split(/(?<=\.)\s+/)[0] || description.slice(0, 140)
+    const removed = readRemovedSlugs()
+    removed.delete(slug)
+    writeRemovedSlugs(removed)
+
     const draft = {
       id,
       slug,
       name,
+      summary,
       description,
       legacyHref: null,
       createdAt: new Date().toISOString(),
@@ -471,6 +550,122 @@ async function handleCreateProject(req, res) {
   }
 }
 
+async function handleUpdateProject(req, res, slug) {
+  if (req.method !== 'PUT' && req.method !== 'PATCH') {
+    return sendJson(res, 405, { error: 'Method not allowed' })
+  }
+  try {
+    const body = await readBody(req)
+    if (!isAuthed(req, body)) {
+      return sendJson(res, 401, { error: 'Unauthorized. Please log in again.' })
+    }
+
+    const projects = syncProjectsFromDisk()
+    const index = projects.findIndex((p) => p.slug === slug)
+    if (index === -1) return sendJson(res, 404, { error: 'Project not found' })
+
+    const current = projects[index]
+    const name = String(body.name ?? current.name ?? '').trim()
+    const description = String(body.description ?? current.description ?? '').trim()
+    const summary = String(body.summary ?? current.summary ?? '').trim()
+    if (!name) return sendJson(res, 400, { error: 'Project name is required' })
+    if (!description) return sendJson(res, 400, { error: 'Description is required' })
+
+    const { imagesDir, journalDir } = ensureProjectFolders(slug)
+
+    const removeImages = Array.isArray(body.removeImages) ? body.removeImages : []
+    removeImages.forEach((src) => {
+      const file = path.basename(String(src || ''))
+      safeUnlinkUnder(imagesDir, file)
+    })
+
+    const removeJournal = Array.isArray(body.removeJournal) ? body.removeJournal : []
+    removeJournal.forEach((src) => {
+      const file = path.basename(String(src || ''))
+      const base = file.replace(/\.[^.]+$/, '')
+      safeUnlinkUnder(journalDir, file)
+      safeUnlinkUnder(journalDir, `${base}.txt`)
+    })
+
+    const existingImages = listImagesInDir(imagesDir, `/cms-projects/${slug}/images`)
+    const imageInputs = Array.isArray(body.images) ? body.images : []
+    imageInputs.forEach((img, i) => {
+      if (!img?.data) return
+      const ext = extensionFromMime(img.type)
+      const stamp = Date.now() + i
+      saveBase64Image(img.data, path.join(imagesDir, `project-${stamp}${ext}`))
+    })
+
+    const journalInputs = Array.isArray(body.journal) ? body.journal : []
+    journalInputs.forEach((entry, i) => {
+      if (!entry?.data) return
+      const ext = extensionFromMime(entry.type)
+      const stamp = Date.now() + i
+      const filename = `journal-${stamp}${ext}`
+      if (saveBase64Image(entry.data, path.join(journalDir, filename))) {
+        const caption = String(entry.caption || '').trim()
+        if (caption) {
+          fs.writeFileSync(path.join(journalDir, `journal-${stamp}.txt`), `${caption}\n`, 'utf8')
+        }
+      }
+    })
+
+    // Optional caption updates for existing journal files
+    const journalCaptions = Array.isArray(body.journalCaptions) ? body.journalCaptions : []
+    journalCaptions.forEach((entry) => {
+      const file = path.basename(String(entry?.image || ''))
+      if (!file) return
+      const base = file.replace(/\.[^.]+$/, '')
+      const caption = String(entry.caption || '').trim()
+      const captionPath = path.join(journalDir, `${base}.txt`)
+      if (caption) fs.writeFileSync(captionPath, `${caption}\n`, 'utf8')
+      else if (fs.existsSync(captionPath)) fs.unlinkSync(captionPath)
+    })
+
+    projects[index] = {
+      ...current,
+      name,
+      summary: summary || description.split(/(?<=\.)\s+/)[0] || description.slice(0, 140),
+      description,
+      updatedAt: new Date().toISOString(),
+    }
+    writeProjects(projects)
+    const synced = syncProjectsFromDisk()
+    const project = synced.find((p) => p.slug === slug)
+    return sendJson(res, 200, { ok: true, project, previousImageCount: existingImages.length })
+  } catch (err) {
+    console.error('[shaila-admin] update', err)
+    return sendJson(res, 500, { error: 'Could not update project' })
+  }
+}
+
+async function handleDeleteProject(req, res, slug) {
+  if (req.method !== 'DELETE') return sendJson(res, 405, { error: 'Method not allowed' })
+  try {
+    const body = await readBody(req).catch(() => ({}))
+    if (!isAuthed(req, body)) {
+      return sendJson(res, 401, { error: 'Unauthorized. Please log in again.' })
+    }
+
+    const projects = syncProjectsFromDisk()
+    const next = projects.filter((p) => p.slug !== slug)
+    if (next.length === projects.length) {
+      return sendJson(res, 404, { error: 'Project not found' })
+    }
+
+    const removed = readRemovedSlugs()
+    removed.add(slug)
+    writeRemovedSlugs(removed)
+    writeProjects(next)
+    removeDirRecursive(path.join(CMS_DIR, slug))
+    syncProjectsFromDisk()
+    return sendJson(res, 200, { ok: true, slug })
+  } catch (err) {
+    console.error('[shaila-admin] delete', err)
+    return sendJson(res, 500, { error: 'Could not delete project' })
+  }
+}
+
 export function shailaAdminPlugin() {
   const mount = (middlewares) => {
     middlewares.use(async (req, res, next) => {
@@ -478,7 +673,14 @@ export function shailaAdminPlugin() {
       if (url === '/api/admin/login') return handleLogin(req, res)
       if (url === '/api/admin/logout') return handleLogout(req, res)
       if (url === '/api/projects' && req.method === 'GET') return handleGetProjects(req, res)
-      if (url === '/api/admin/projects') return handleCreateProject(req, res)
+      if (url === '/api/admin/projects' && req.method === 'POST') return handleCreateProject(req, res)
+
+      const projectMatch = url?.match(/^\/api\/admin\/projects\/([^/]+)$/)
+      if (projectMatch) {
+        const slug = decodeURIComponent(projectMatch[1])
+        if (req.method === 'PUT' || req.method === 'PATCH') return handleUpdateProject(req, res, slug)
+        if (req.method === 'DELETE') return handleDeleteProject(req, res, slug)
+      }
       return next()
     })
   }

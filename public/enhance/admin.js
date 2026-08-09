@@ -1,4 +1,4 @@
-/* Shaila Rizvi admin: login + project questionnaire */
+/* Shaila Rizvi admin: login + manage / add / edit / delete projects */
 (function () {
   'use strict'
 
@@ -7,11 +7,19 @@
 
   const state = {
     loggedIn: false,
+    view: 'list', // list | create | edit
+    projects: [],
     step: 0,
+    editingSlug: '',
     name: '',
+    summary: '',
     description: '',
-    images: [],
-    journal: [],
+    images: [], // new uploads (data urls)
+    journal: [], // new journal uploads
+    existingImages: [],
+    existingJournal: [],
+    removeImages: [],
+    removeJournal: [],
   }
 
   function getToken() {
@@ -56,6 +64,7 @@
     Object.entries(attrs).forEach(([k, v]) => {
       if (k === 'className') node.className = v
       else if (k === 'text') node.textContent = v
+      else if (k === 'html') node.innerHTML = v
       else if (k.startsWith('on') && typeof v === 'function') node.addEventListener(k.slice(2).toLowerCase(), v)
       else if (v != null) node.setAttribute(k, v)
     })
@@ -74,13 +83,27 @@
     document.head.appendChild(link)
   }
 
+  function resetDraft() {
+    state.step = 0
+    state.editingSlug = ''
+    state.name = ''
+    state.summary = ''
+    state.description = ''
+    state.images = []
+    state.journal = []
+    state.existingImages = []
+    state.existingJournal = []
+    state.removeImages = []
+    state.removeJournal = []
+  }
+
   function mountChrome() {
     if (document.querySelector('.sr-admin-fab')) return
 
     const fab = el('button', {
       type: 'button',
       className: 'sr-admin-fab',
-      text: getToken() ? 'Add Project' : 'Login',
+      text: getToken() ? 'Manage' : 'Login',
       id: 'sr-admin-fab',
     })
     fab.addEventListener('click', () => openPanel())
@@ -98,16 +121,28 @@
   function updateFab() {
     const fab = document.getElementById('sr-admin-fab')
     if (!fab) return
-    fab.textContent = state.loggedIn ? 'Add Project' : 'Login'
+    fab.textContent = state.loggedIn ? 'Manage' : 'Login'
   }
 
-  function openPanel() {
+  async function openPanel() {
     const overlay = document.getElementById('sr-admin-overlay')
     if (!overlay) return
     overlay.innerHTML = ''
-    overlay.appendChild(renderPanel())
+    overlay.appendChild(el('div', { className: 'sr-admin-panel', html: '<p class="sr-admin-help">Loading…</p>' }))
     overlay.classList.add('is-open')
     document.body.style.overflow = 'hidden'
+
+    if (state.loggedIn && state.view === 'list') {
+      try {
+        const data = await api(`/api/projects?t=${Date.now()}`)
+        state.projects = data.projects || []
+      } catch {
+        state.projects = []
+      }
+    }
+
+    overlay.innerHTML = ''
+    overlay.appendChild(renderPanel())
   }
 
   function closePanel() {
@@ -125,11 +160,16 @@
         el('h2', { text: 'Studio Login' }),
         el('p', {
           className: 'sr-admin-help',
-          text: 'Sign in to add a project. It will appear in Projects and Case Studies.',
+          text: 'Sign in to add, edit, or remove projects. Changes update Case Studies and project pages.',
         }),
       )
       const form = el('form')
-      const pass = el('input', { type: 'password', required: 'true', placeholder: 'Password', autocomplete: 'current-password' })
+      const pass = el('input', {
+        type: 'password',
+        required: 'true',
+        placeholder: 'Password',
+        autocomplete: 'current-password',
+      })
       const err = el('p', { className: 'sr-admin-error' })
       form.append(
         el('div', { className: 'sr-admin-field' }, [el('label', { text: 'Password' }), pass]),
@@ -149,7 +189,8 @@
           })
           setToken(data.token)
           state.loggedIn = true
-          state.step = 0
+          state.view = 'list'
+          resetDraft()
           updateFab()
           openPanel()
         } catch (ex) {
@@ -160,16 +201,163 @@
       return panel
     }
 
+    if (state.view === 'list') {
+      panel.append(renderListView())
+      return panel
+    }
+
+    const title = state.view === 'edit' ? `Edit · ${state.name || state.editingSlug}` : 'New Project'
     panel.append(
-      el('h2', { text: 'New Project' }),
+      el('h2', { text: title }),
       el('p', {
         className: 'sr-admin-help',
-        text: 'A short guided flow: name, story, project images, then journal images.',
+        text:
+          state.view === 'edit'
+            ? 'Update the story, card blurb, and galleries. Saved changes refresh Case Studies and this project page.'
+            : 'Guided flow: name, story, project images, then journal images.',
       }),
-      renderStepPills(),
-      renderStepBody(),
+      state.view === 'create' ? renderStepPills() : null,
+      renderEditorBody(),
     )
     return panel
+  }
+
+  function renderListView() {
+    const wrap = el('div')
+    wrap.append(
+      el('h2', { text: 'Projects' }),
+      el('p', {
+        className: 'sr-admin-help',
+        text: 'Edit any project, add a new one, or delete. Home Case Studies and project pages stay in sync.',
+      }),
+    )
+
+    const list = el('div', { className: 'sr-admin-project-list' })
+    if (!state.projects.length) {
+      list.append(el('p', { className: 'sr-admin-help', text: 'No projects yet.' }))
+    }
+    state.projects.forEach((project) => {
+      const row = el('div', { className: 'sr-admin-project-row' })
+      const cover = project.images?.[0]
+      const meta = el('div', { className: 'sr-admin-project-meta' }, [
+        cover ? el('img', { src: cover, alt: '', className: 'sr-admin-project-thumb' }) : el('div', { className: 'sr-admin-project-thumb is-empty' }),
+        el('div', {}, [
+          el('strong', { text: project.name }),
+          el('p', {
+            className: 'sr-admin-help',
+            text: `${(project.summary || project.description || '').slice(0, 90)}${(project.summary || project.description || '').length > 90 ? '…' : ''}`,
+          }),
+          el('p', {
+            className: 'sr-admin-help',
+            text: `${(project.images || []).length} images · ${(project.journal || []).length} journal`,
+          }),
+        ]),
+      ])
+      const actions = el('div', { className: 'sr-admin-project-actions' }, [
+        el('button', {
+          type: 'button',
+          className: 'sr-admin-btn',
+          text: 'Edit',
+          onClick: () => startEdit(project),
+        }),
+        el('a', {
+          className: 'sr-admin-btn',
+          href: project.href || `/cms-projects/${project.slug}/`,
+          text: 'View',
+          target: '_blank',
+          rel: 'noopener',
+        }),
+        el('button', {
+          type: 'button',
+          className: 'sr-admin-btn danger',
+          text: 'Delete',
+          onClick: () => deleteProject(project),
+        }),
+      ])
+      row.append(meta, actions)
+      list.append(row)
+    })
+
+    wrap.append(
+      list,
+      el('div', { className: 'sr-admin-actions' }, [
+        el('button', {
+          type: 'button',
+          className: 'sr-admin-btn primary',
+          text: 'Add project',
+          onClick: () => {
+            resetDraft()
+            state.view = 'create'
+            openPanel()
+          },
+        }),
+        el('button', {
+          type: 'button',
+          className: 'sr-admin-btn',
+          text: 'Log out',
+          onClick: logout,
+        }),
+        el('button', {
+          type: 'button',
+          className: 'sr-admin-btn',
+          text: 'Close',
+          onClick: closePanel,
+        }),
+      ]),
+    )
+    return wrap
+  }
+
+  function startEdit(project) {
+    state.view = 'edit'
+    state.editingSlug = project.slug
+    state.name = project.name || ''
+    state.summary = project.summary || ''
+    state.description = project.description || ''
+    state.existingImages = [...(project.images || [])]
+    state.existingJournal = (project.journal || []).map((j) => ({
+      image: j.image,
+      caption: j.caption || '',
+    }))
+    state.images = []
+    state.journal = []
+    state.removeImages = []
+    state.removeJournal = []
+    state.step = 0
+    openPanel()
+  }
+
+  async function deleteProject(project) {
+    if (!window.confirm(`Delete “${project.name}”? This removes its folder and Case Study card.`)) return
+    try {
+      await api(`/api/admin/projects/${encodeURIComponent(project.slug)}`, {
+        method: 'DELETE',
+        body: JSON.stringify({ token: getToken() }),
+      })
+      await injectProjects()
+      if (location.pathname.includes(`/cms-projects/${project.slug}`)) {
+        location.href = '/#case-studies'
+        return
+      }
+      state.view = 'list'
+      openPanel()
+    } catch (ex) {
+      window.alert(ex.message || 'Could not delete project')
+    }
+  }
+
+  async function logout() {
+    try {
+      await api('/api/admin/logout', { method: 'POST', body: JSON.stringify({ token: getToken() }) })
+    } catch {
+      /* ignore */
+    }
+    setToken('')
+    state.loggedIn = false
+    state.view = 'list'
+    resetDraft()
+    updateFab()
+    closePanel()
   }
 
   function renderStepPills() {
@@ -188,74 +376,133 @@
     return wrap
   }
 
-  function renderStepBody() {
+  function renderExistingImageGrid(kind) {
+    const items = kind === 'images' ? state.existingImages : state.existingJournal
+    const removeList = kind === 'images' ? state.removeImages : state.removeJournal
+    const grid = el('div', { className: 'sr-admin-preview' })
+    items.forEach((item) => {
+      const src = typeof item === 'string' ? item : item.image
+      if (removeList.includes(src)) return
+      const cell = el('div', { className: 'sr-admin-thumb-wrap' })
+      cell.append(
+        el('img', { src, alt: '' }),
+        el('button', {
+          type: 'button',
+          className: 'sr-admin-btn danger sr-admin-thumb-remove',
+          text: 'Remove',
+          onClick: () => {
+            removeList.push(src)
+            openPanel()
+          },
+        }),
+      )
+      if (kind === 'journal' && typeof item === 'object') {
+        const caption = el('input', {
+          type: 'text',
+          value: item.caption || '',
+          placeholder: 'Caption',
+        })
+        caption.addEventListener('input', () => {
+          item.caption = caption.value
+        })
+        cell.append(caption)
+      }
+      grid.append(cell)
+    })
+    if (!grid.childNodes.length) {
+      grid.append(el('p', { className: 'sr-admin-help', text: 'No images yet.' }))
+    }
+    return grid
+  }
+
+  function renderEditorBody() {
     const wrap = el('div')
     const err = el('p', { className: 'sr-admin-error', id: 'sr-admin-err' })
     const ok = el('p', { className: 'sr-admin-success', id: 'sr-admin-ok' })
+    const isEdit = state.view === 'edit'
+    const step = isEdit ? -1 : state.step
 
-    if (state.step === 0) {
-      const input = el('input', {
-        type: 'text',
-        value: state.name,
-        placeholder: 'e.g. Bungalow East Village',
-        required: 'true',
-      })
+    const showName = isEdit || step === 0
+    const showDesc = isEdit || step === 1
+    const showImages = isEdit || step === 2
+    const showJournal = isEdit || step === 3
+    const showReview = !isEdit && step === 4
+
+    if (showName) {
+      const input = el('input', { type: 'text', value: state.name, placeholder: 'e.g. Bungalow East Village' })
       input.addEventListener('input', () => {
         state.name = input.value
       })
-      wrap.append(
-        el('div', { className: 'sr-admin-field' }, [
-          el('label', { text: 'Project name' }),
-          input,
-        ]),
-      )
+      wrap.append(el('div', { className: 'sr-admin-field' }, [el('label', { text: 'Project name' }), input]))
     }
 
-    if (state.step === 1) {
-      const ta = el('textarea', {
-        placeholder: 'Write the project story in your own words...',
-      })
+    if (showDesc) {
+      if (isEdit) {
+        const summary = el('textarea', { placeholder: 'Short blurb for the home Case Studies card...' })
+        summary.value = state.summary
+        summary.addEventListener('input', () => {
+          state.summary = summary.value
+        })
+        wrap.append(
+          el('div', { className: 'sr-admin-field' }, [
+            el('label', { text: 'Card summary (home page)' }),
+            summary,
+          ]),
+        )
+      }
+      const ta = el('textarea', { placeholder: 'Full project story for the case study page...' })
       ta.value = state.description
+      ta.style.minHeight = isEdit ? '220px' : '120px'
       ta.addEventListener('input', () => {
         state.description = ta.value
       })
       wrap.append(
         el('div', { className: 'sr-admin-field' }, [
-          el('label', { text: 'Description' }),
+          el('label', { text: isEdit ? 'Full description (case study page)' : 'Description' }),
           ta,
         ]),
       )
     }
 
-    if (state.step === 2) {
+    if (showImages) {
+      if (isEdit) {
+        wrap.append(
+          el('p', { className: 'sr-admin-help', text: 'Current project images' }),
+          renderExistingImageGrid('images'),
+        )
+      }
       const input = el('input', { type: 'file', accept: 'image/*', multiple: 'true' })
-      const preview = el('div', { className: 'sr-admin-preview', id: 'sr-img-preview' })
-      input.addEventListener('change', async () => {
-        const files = Array.from(input.files || [])
-        state.images = await Promise.all(files.map(fileToData))
+      const preview = el('div', { className: 'sr-admin-preview' })
+      const redrawNew = () => {
         preview.innerHTML = ''
         state.images.forEach((img) => {
           preview.append(el('img', { src: img.data, alt: img.name || 'Project image' }))
         })
+      }
+      input.addEventListener('change', async () => {
+        const files = Array.from(input.files || [])
+        const added = await Promise.all(files.map(fileToData))
+        state.images = isEdit ? state.images.concat(added) : added
+        redrawNew()
       })
-      // restore preview
-      state.images.forEach((img) => {
-        preview.append(el('img', { src: img.data, alt: img.name || 'Project image' }))
-      })
+      redrawNew()
       wrap.append(
         el('p', {
           className: 'sr-admin-help',
-          text: 'Add the main project photos. These show in the case study gallery.',
+          text: isEdit ? 'Add more project photos (saved when you click Save).' : 'Add the main project photos.',
         }),
-        el('div', { className: 'sr-admin-field' }, [
-          el('label', { text: 'Project images' }),
-          input,
-        ]),
+        el('div', { className: 'sr-admin-field' }, [el('label', { text: 'Add images' }), input]),
         preview,
       )
     }
 
-    if (state.step === 3) {
+    if (showJournal) {
+      if (isEdit) {
+        wrap.append(
+          el('p', { className: 'sr-admin-help', text: 'Current journal images' }),
+          renderExistingImageGrid('journal'),
+        )
+      }
       const list = el('div', { id: 'sr-journal-list' })
       const redraw = () => {
         list.innerHTML = ''
@@ -269,65 +516,83 @@
           caption.addEventListener('input', () => {
             state.journal[idx].caption = caption.value
           })
-          const thumb = entry.data
-            ? el('img', { src: entry.data, alt: 'Journal', style: 'width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:0.5rem' })
-            : null
-          const remove = el('button', {
-            type: 'button',
-            className: 'sr-admin-btn',
-            text: 'Remove',
-            onClick: () => {
-              state.journal.splice(idx, 1)
-              redraw()
-            },
-          })
-          row.append(thumb, caption, el('div', { className: 'sr-admin-actions' }, [remove]))
+          row.append(
+            el('img', {
+              src: entry.data,
+              alt: 'Journal',
+              style: 'width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:0.5rem',
+            }),
+            caption,
+            el('div', { className: 'sr-admin-actions' }, [
+              el('button', {
+                type: 'button',
+                className: 'sr-admin-btn',
+                text: 'Remove',
+                onClick: () => {
+                  state.journal.splice(idx, 1)
+                  redraw()
+                },
+              }),
+            ]),
+          )
           list.append(row)
         })
       }
       redraw()
-
-      const addBtn = el('button', {
-        type: 'button',
-        className: 'sr-admin-btn',
-        text: 'Add journal image',
-        onClick: () => {
-          const picker = el('input', { type: 'file', accept: 'image/*', style: 'display:none' })
-          picker.addEventListener('change', async () => {
-            const file = picker.files && picker.files[0]
-            if (!file) return
-            const data = await fileToData(file)
-            state.journal.push({ ...data, caption: '' })
-            redraw()
-            picker.remove()
-          })
-          document.body.appendChild(picker)
-          picker.click()
-        },
-      })
-
       wrap.append(
-        el('p', {
-          className: 'sr-admin-help',
-          text: 'Journal entries are process shots or notes. Add one image at a time, with an optional caption.',
-        }),
+        el('p', { className: 'sr-admin-help', text: 'Journal entries are process shots or notes.' }),
         list,
-        el('div', { className: 'sr-admin-actions' }, [addBtn]),
+        el('div', { className: 'sr-admin-actions' }, [
+          el('button', {
+            type: 'button',
+            className: 'sr-admin-btn',
+            text: 'Add journal image',
+            onClick: () => {
+              const picker = el('input', { type: 'file', accept: 'image/*', style: 'display:none' })
+              picker.addEventListener('change', async () => {
+                const file = picker.files && picker.files[0]
+                if (!file) return
+                const data = await fileToData(file)
+                state.journal.push({ ...data, caption: '' })
+                redraw()
+                picker.remove()
+              })
+              document.body.appendChild(picker)
+              picker.click()
+            },
+          }),
+        ]),
       )
     }
 
-    if (state.step === 4) {
+    if (showReview) {
       wrap.append(
         el('p', { className: 'sr-admin-help', text: 'Review before publishing to the site.' }),
         el('p', { text: `Name: ${state.name || '(missing)'}` }),
-        el('p', { text: `Description: ${(state.description || '').slice(0, 180)}${(state.description || '').length > 180 ? '…' : ''}` }),
+        el('p', {
+          text: `Description: ${(state.description || '').slice(0, 180)}${(state.description || '').length > 180 ? '…' : ''}`,
+        }),
         el('p', { text: `Project images: ${state.images.length}` }),
         el('p', { text: `Journal images: ${state.journal.length}` }),
       )
     }
 
     const actions = el('div', { className: 'sr-admin-actions' })
-    if (state.step > 0) {
+
+    actions.append(
+      el('button', {
+        type: 'button',
+        className: 'sr-admin-btn',
+        text: 'Back to list',
+        onClick: () => {
+          resetDraft()
+          state.view = 'list'
+          openPanel()
+        },
+      }),
+    )
+
+    if (!isEdit && state.step > 0) {
       actions.append(
         el('button', {
           type: 'button',
@@ -340,7 +605,8 @@
         }),
       )
     }
-    if (state.step < STEPS.length - 1) {
+
+    if (!isEdit && state.step < STEPS.length - 1) {
       actions.append(
         el('button', {
           type: 'button',
@@ -361,74 +627,98 @@
           },
         }),
       )
-    } else {
+    } else if (!isEdit) {
       actions.append(
         el('button', {
           type: 'button',
           className: 'sr-admin-btn primary',
           text: 'Publish project',
-          onClick: async () => {
-            err.textContent = ''
-            ok.textContent = ''
-            try {
-              const data = await api('/api/admin/projects', {
-                method: 'POST',
-                body: JSON.stringify({
-                  token: getToken(),
-                  name: state.name.trim(),
-                  description: state.description.trim(),
-                  images: state.images,
-                  journal: state.journal,
-                }),
-              })
-              ok.textContent = 'Published. Updating the page…'
-              await injectProjects()
-              state.name = ''
-              state.description = ''
-              state.images = []
-              state.journal = []
-              state.step = 0
-              setTimeout(() => {
-                closePanel()
-                if (data.project?.href) {
-                  // soft highlight on home; stay on page
-                }
-              }, 700)
-            } catch (ex) {
-              err.textContent = ex.message || 'Could not publish'
-            }
-          },
+          onClick: () => publishCreate(err, ok),
+        }),
+      )
+    } else {
+      actions.append(
+        el('button', {
+          type: 'button',
+          className: 'sr-admin-btn primary',
+          text: 'Save changes',
+          onClick: () => saveEdit(err, ok),
         }),
       )
     }
 
     actions.append(
-      el('button', {
-        type: 'button',
-        className: 'sr-admin-btn',
-        text: 'Log out',
-        onClick: async () => {
-          try {
-            await api('/api/admin/logout', { method: 'POST', body: JSON.stringify({ token: getToken() }) })
-          } catch {
-            /* ignore */
-          }
-          setToken('')
-          state.loggedIn = false
-          updateFab()
-          closePanel()
-        },
-      }),
-      el('button', {
-        type: 'button',
-        className: 'sr-admin-btn',
-        text: 'Close',
-        onClick: closePanel,
-      }),
+      el('button', { type: 'button', className: 'sr-admin-btn', text: 'Close', onClick: closePanel }),
     )
 
     wrap.append(err, ok, actions)
     return wrap
+  }
+
+  async function publishCreate(err, ok) {
+    err.textContent = ''
+    ok.textContent = ''
+    try {
+      await api('/api/admin/projects', {
+        method: 'POST',
+        body: JSON.stringify({
+          token: getToken(),
+          name: state.name.trim(),
+          description: state.description.trim(),
+          summary: state.summary.trim(),
+          images: state.images,
+          journal: state.journal,
+        }),
+      })
+      ok.textContent = 'Published. Updating Case Studies…'
+      await injectProjects()
+      resetDraft()
+      state.view = 'list'
+      setTimeout(() => openPanel(), 400)
+    } catch (ex) {
+      err.textContent = ex.message || 'Could not publish'
+    }
+  }
+
+  async function saveEdit(err, ok) {
+    err.textContent = ''
+    ok.textContent = ''
+    if (!state.name.trim() || !state.description.trim()) {
+      err.textContent = 'Name and full description are required.'
+      return
+    }
+    try {
+      const data = await api(`/api/admin/projects/${encodeURIComponent(state.editingSlug)}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          token: getToken(),
+          name: state.name.trim(),
+          summary: state.summary.trim(),
+          description: state.description.trim(),
+          images: state.images,
+          journal: state.journal,
+          removeImages: state.removeImages,
+          removeJournal: state.removeJournal,
+          journalCaptions: state.existingJournal
+            .filter((j) => !state.removeJournal.includes(j.image))
+            .map((j) => ({ image: j.image, caption: j.caption || '' })),
+        }),
+      })
+      ok.textContent = 'Saved. Refreshing…'
+      await injectProjects()
+      const href = data.project?.href || `/cms-projects/${state.editingSlug}/`
+      if (location.pathname.includes(`/cms-projects/${state.editingSlug}`)) {
+        setTimeout(() => {
+          location.href = `${href}?t=${Date.now()}`
+        }, 350)
+        return
+      }
+      resetDraft()
+      state.view = 'list'
+      setTimeout(() => openPanel(), 350)
+    } catch (ex) {
+      err.textContent = ex.message || 'Could not save'
+    }
   }
 
   function findLegacyCover(project) {
@@ -436,10 +726,14 @@
     const blocks = document.querySelectorAll('.case--study-spacing:not(.sr-cms-case)')
     for (const block of blocks) {
       const label = (block.textContent || '').toLowerCase()
-      const hit = needles.some((n) => label.includes(String(n).toLowerCase().replace(/-/g, ' ')) || label.includes(String(n).toLowerCase()))
+      const hit = needles.some(
+        (n) =>
+          label.includes(String(n).toLowerCase().replace(/-/g, ' ')) ||
+          label.includes(String(n).toLowerCase()),
+      )
       if (!hit) continue
-      const img = [...block.querySelectorAll('img.showcase-img, img')].find((el) => {
-        const src = el.getAttribute('src') || ''
+      const img = [...block.querySelectorAll('img.showcase-img, img')].find((node) => {
+        const src = node.getAttribute('src') || ''
         return src && !src.includes('placeholder')
       })
       if (img) return img.currentSrc || img.getAttribute('src')
@@ -458,14 +752,10 @@
     section.innerHTML = `
       <div class="case-study-grid">
         <div class="left-case-study">
-          <div class="case-study-conten">
-            <div class="grdn-doth"></div>
-            <h6 class="case-study-heading-2"><em class="italic-text">Case Study</em></h6>
-          </div>
           <h3 class="logo-name-cms">${escapeHtml(project.name)}</h3>
         </div>
         <div class="left-case-study">
-          <p class="case-_study-paragrah">${escapeHtml(project.description)}</p>
+          <p class="case-_study-paragrah">${escapeHtml(project.summary || project.description)}</p>
           <div class="cse-study-marque">
             <a href="${escapeHtml(project.href)}" class="marque-link w-inline-block">
               <div class="div-block-19">
@@ -527,13 +817,12 @@
       }
     }
     if (!Array.isArray(projects)) projects = []
+    state.projects = projects
 
-    // Detailed case study section: insert before "All Case Studies"
     const allSection = document.querySelector('.all-case-study-section')
     const caseSection = document.querySelector('.case-study-section')
     document.querySelectorAll('.sr-cms-case').forEach((n) => n.remove())
 
-    // Hide original static Webflow case studies so folder-driven cards are the source of truth
     if (caseSection && projects.length) {
       caseSection.querySelectorAll('.case--study-spacing:not(.sr-cms-case)').forEach((n) => {
         n.style.display = 'none'
@@ -554,7 +843,6 @@
       })
     }
 
-    // All Case Studies vertical list
     const list = document.querySelector('.collection-list-4.w-dyn-items')
     document.querySelectorAll('.sr-cms-chip').forEach((n) => n.remove())
     if (list) {
@@ -565,7 +853,6 @@
       projects.forEach((project) => list.appendChild(buildAllCaseChip(project)))
     }
 
-    // Give case studies section an id for deep links if missing
     if (caseSection && !caseSection.id) caseSection.id = 'case-studies'
   }
 

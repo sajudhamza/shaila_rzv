@@ -3,7 +3,8 @@
     "id": "bungalow",
     "slug": "bungalow",
     "name": "Bungalow",
-    "description": "Bungalow in NYC's East Village: A luxe retreat inspired by vintage Indian living, meticulously crafted.",
+    "summary": "Bungalow in NYC East Village: vintage Indian living, meticulously crafted.",
+    "description": "Located in the East Village of New York City, Bungalow transports guests to the opulence of vintage Indian upscale living. Inspired by British-era buildings in India, it embodies the essence of luxury associated with bungalows, once homes to eminent individuals and social clubs. Despite facing challenges of a cellar space with low ceilings, the design meticulously crafted an ambiance reminiscent of a traditional bungalow. As guests step through the entrance, they are greeted by a striking mural at the host station, setting the tone for the luxurious experience that awaits. The Library & Bar lounge beckons with its inviting atmosphere, while the Dining area offers a feast for the senses with its unique design elements. Booth seating resembling balconies and a serene skylight area further immerse guests in an outdoor garden/verandah feel. The interior design narrative is woven with jewel tone colors like amber, emerald, and ruby, combined with soft pastel shades commonly found in old Indian architectures. Each hue and tactile element, carefully custom-made in brass, glass, and wood, enriches the guest experience with layers of cultural depth and visual allure. Every detail is carefully considered, from the custom-made furniture, decor pieces, and lighting fixtures meticulously crafted in Delhi, Jaipur, and Gurgaon, ensuring authenticity and quality. Unlike traditional softwood bentwood, bespoke wooden chairs are crafted from teak wood, adding a touch of sophistication to the space. All the oil paintings in the lounge area are hand-painted, and every illustration on the branding is hand-sketched to reflect the physical space accurately. Through virtual collaboration and regular video calls, every aspect of the design, from upholstery to wood finishes, was decided with precision and care. The customization of wall lights and chandeliers posed significant challenges, yet the team persevered, translating hand-drawn designs into exquisite brass fixtures with cut and frosted glass finishes, resulting in a truly breathtaking aesthetic. Bungalow is more than just a restaurant; it is an immersive experience curated to evoke a sense of home and leisure, where every detail reflects the nostalgia and charm of the bygone era.",
     "legacyHref": "/desing-cms/bungalow/",
     "images": [
       "/cms-projects/bungalow/images/cover-01.jpeg",
@@ -12,13 +13,15 @@
     ],
     "journal": [],
     "createdAt": "2026-08-08T23:46:56.936Z",
-    "href": "/cms-projects/bungalow/"
+    "href": "/cms-projects/bungalow/",
+    "updatedAt": "2026-08-09T01:51:06.449Z"
   },
   {
     "id": "chote-miya",
     "slug": "chote-miya",
     "name": "Chote Miya",
-    "description": "Chote Miya: A vibrant tribute to 90's India, blending street flavors with nostalgic ambiance in NYC.",
+    "summary": "Chote Miya: A vibrant tribute to 90's India, blending street flavors with nostalgic ambiance in NYC.",
+    "description": "Chote Miya is a vibrant ode to the streets of India. The space, formerly a meat store, undergoes a remarkable transformation. Our approach unfolds with a nostalgic glance back to 90s India, a time of thriving local brands and tantalizing street treats. The space layout is designed to accommodate a large kitchen, a front cash and food dispersal counter, a seating area, and a large display cabinet. A communal table beckons patrons to gather and savor the flavors of India amidst famous grocery items on display and Bollywood melodies, embracing an eclectic narrative steeped in nostalgia. Drawing inspiration from Bombay's Irani cafes and the vernacular of its bustling streets, the space is adorned with teak wood millwork and furniture. Vintage advertising posters on wall frames ignite a sense of homecoming for guests. Tube lights hang with modern simplicity, while iconic bentwood chairs and bespoke graphical artwork create a departure from convention, evoking a welcoming ambiance throughout. The color scheme mirrors the vibrancy of Indian streets, with the main signboard serving as an invitation to an Indian street. Inside, a towering wall mural adorned with matchbox art depicts the essence of Bombay life in vivid detail, from colorful taxis to iconic double-decker buses. Inspired by the whimsical quotes adorning Indian trucks and buses, the graphic design used in the space adds a playful touch. Quotations like tip top, free wi-fi, high class, and freshly made adorn the display cabinet top shelves and other areas, adding to the authenticity and charm. Chote Miya's design is a journey through the bustling streets of India, a celebration of culture, flavor, and community. For the bustling metropolis of New York, it is a cherished escape into a world of vibrant authenticity.",
     "legacyHref": "/desing-cms/chote-miya/",
     "images": [
       "/cms-projects/chote-miya/images/cover-01.jpg",
@@ -33,7 +36,8 @@
     "id": "gupshup",
     "slug": "gupshup",
     "name": "GupShup",
-    "description": "GupShup (Bombay House) in NYC: 1970s Bombay nostalgia meets vibrant ambiance, blending Indian culture with creativity.",
+    "summary": "GupShup (Bombay House) in NYC: 1970s Bombay nostalgia meets vibrant ambiance, blending Indian culture with creativity.",
+    "description": "GupShup is a nostalgic journey back to the 1970s Bombay-era Parsi home, reimagined in New York City. Nestled in Gramercy Park, GupShup exudes a captivating ambiance, adorned with intricate design elements such as charming light fixtures, jewel toned textiles, vibrant artwork, and a captivating display Dabba/tiffin wall. The design is a blend of talent from This is it Designs in Delhi and the creative prowess of Keith+Lead. Since its inception in 2018, our role has been integral to the brand, sourcing unique elements like enchanting bicycles, eye-catching mirrors, distressed wood sideboards, furniture and other decor from India. This role also involved orchestrating outdoor space, infusing special events with bespoke interior decorations, and rebranding GupShup's collaterals. The restaurant's retro charm allows for a diverse and eclectic narrative that resonates deeply with its patrons.",
     "legacyHref": "/desing-cms/gupshup/",
     "images": [
       "/cms-projects/gupshup/images/cover-01.JPG",
@@ -48,7 +52,8 @@
     "id": "ammi",
     "slug": "ammi",
     "name": "Ammi",
-    "description": "Ammi at Pier 57, NYC: Homestyle Indian cuisine, vibrant design, and open kitchen for immersive dining.",
+    "summary": "Ammi at Pier 57, NYC: Homestyle Indian cuisine, vibrant design, and open kitchen for immersive dining.",
+    "description": "Ammi, located within Pier 57 in New York, offers a delightful tribute to the comforting homestyle cuisine of India. Within the bustling food court of Market 57 Station, Ammi's kiosk space welcomes visitors with a charming design, adorned with marigold flowers and an inviting orange and green color scheme. Upon entering Ammi, guests are greeted by the uplifting sight of marigolds. The open cooking concept of Ammi demanded a functional and contemporary layout, meticulously designed to optimize efficiency in the cooking, cash, and food dispersal areas. The seamless integration of the kitchen space with the customer-facing areas allows patrons to witness the culinary craftsmanship firsthand. With its vibrant decor, fresh herb accents, and cozy home kitchen atmosphere, Ammi beckons guests to embark on a culinary voyage that celebrates the heartwarming flavors and traditions of Indian home cooking.",
     "legacyHref": "/desing-cms/ammi/",
     "images": [
       "/cms-projects/ammi/images/cover-01.jpg",
@@ -63,7 +68,8 @@
     "id": "movie",
     "slug": "movie",
     "name": "Zindagi Kashmakash",
-    "description": "Zindagi Kashmakash set design crafted to match the film's narrative, era and style with visually compelling interiors.",
+    "summary": "Zindagi Kashmakash set design crafted to match the film's narrative, era and style with visually compelling interiors.",
+    "description": "The set design for the film Zindagi Kashmakash was crafted to match the film's narrative, era, and style, ensuring the spaces were visually compelling and functional. The lead actor's room, set on a terrace, featured a boho, free-spirited style to reflect her creative and unconventional personality. In contrast, her sister, a doctor, had a space designed with muted tones and a minimalistic aesthetic, mirroring her disciplined and reserved nature. These design choices effectively conveyed each character's personality and lifestyle, enriching the narrative and deepening the audience's connection to the characters.",
     "legacyHref": "/desing-cms/movie/",
     "images": [
       "/cms-projects/movie/images/cover-01.jpg",
@@ -78,7 +84,8 @@
     "id": "punjab-meet-house",
     "slug": "punjab-meet-house",
     "name": "Punjab Meet House",
-    "description": "Punjab Meet House in Jersey City: an upscale casual dining room shaped around the warmth of a Punjabi home. Designed by Shaila Rizvi Studio with Phulkari-inspired color, handcrafted furnishings, Indian imports, layered textures, and soft lighting across about 2,245 sq ft at Haus25, Exchange Place.",
+    "summary": "Punjab Meet House in Jersey City: an upscale casual dining room shaped around the warmth of a Punjabi home.",
+    "description": "Punjab Meet House sits on the ground floor of Haus25 at 25 Christopher Columbus Drive in Jersey City, spanning about 2,245 square feet near Exchange Place. Designed by Shaila Rizvi Studio, the upscale casual dining room was shaped to evoke the warmth and hospitality of a Punjabi home. The interior draws on the artistic heritage of the Indian subcontinent through handcrafted furnishings, decorative elements, and authentic imports from India. Warm materials, layered textures, carefully considered lighting, and distinctive architectural details create an environment that feels immersive without becoming theatrical. Vibrant color, Phulkari-inspired pattern, and soft lighting support an atmosphere of refined comfort for both table and bar seating, letting cultural influence come through thoughtfully rather than as ornament alone.",
     "legacyHref": null,
     "images": [
       "/cms-projects/punjab-meet-house/images/cover-01.jpg",
